@@ -1,4 +1,5 @@
 const express = require('express')
+require('dotenv').config()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const app = express();
@@ -7,13 +8,13 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express')
 
 app.use(cors());
 
-const { Person } = require('./model')
-const schema = require('./schema')
-const resolvers = require('./resolvers');
+const { Person } = require('./server/model')
+const schema = require('./server/schema')
+const resolvers = require('./server/resolvers');
 
 mongoose.connect(
-  "mongodb://dost:test@ds157538.mlab.com:57538/graphqltest"
-, (err) => {
+  process.env.DATABASE_URL,
+ (err) => {
   if(err) {
     return console.log(err)
   }
